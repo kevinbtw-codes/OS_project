@@ -13,7 +13,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: 'Named Routes',
+    title: 'Named Route',
     // Start the app with the "/" named route. In this case, the app starts
     // on the FirstScreen widget.
     initialRoute: '/',

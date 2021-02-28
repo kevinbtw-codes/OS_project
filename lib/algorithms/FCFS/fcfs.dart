@@ -58,7 +58,6 @@ void main(List<String> arguments) {
         fcfsalgo(prs);
         break;
       case 3:
-        printprocess(prs);
         break;
       case 4:
         number = false;
@@ -100,13 +99,6 @@ void removeprocess(List l) {
     assignPid(l);
   } else {
     print('enter a valid Pid');
-  }
-}
-
-void printprocess(List l) {
-  print('Pid\tat\tbt\tct\tstart_time\ttat\ttwt');
-  for (var item in l) {
-    print(item);
   }
 }
 

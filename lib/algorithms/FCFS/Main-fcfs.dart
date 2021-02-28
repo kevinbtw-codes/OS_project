@@ -166,7 +166,7 @@ class _AlgorithmState extends State<Algorithm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('FCFS Try'),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blue,
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 10),

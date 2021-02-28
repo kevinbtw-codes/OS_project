@@ -1,10 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './SJF.dart';
-import './Card.dart';
-import './Viewiobt.dart';
+import 'package:os_project/algorithms//Card.dart';
+import 'package:os_project/algorithms/Viewiobt.dart';
 
 //FCFS page stateful class
 class SJFIOBT extends StatefulWidget {

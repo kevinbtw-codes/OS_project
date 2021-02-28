@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'fcfs.dart';
 import 'table.dart';
 
@@ -232,20 +233,51 @@ class _AlgorithmState extends State<Algorithm> {
     var end = prs[index].ct.toString();
     var wt = prs[index].wt.toString();
     return Container(
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ExpansionTile(
-            title: Text(
-              "at: $at\t      \t bt: $bt",
-              style: TextStyle(
-                fontSize: 23,
-              ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
             ),
-            leading: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 30, 0),
-              child: CircleAvatar(
+          ],
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: 'Edit',
+              color: Colors.black45,
+              icon: Icons.edit,
+              onTap: () => print('Edit'),
+            ),
+            IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () => print('Delete'),
+            ),
+          ],
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ExpansionTile(
+              title: Text(
+                "at: $at\t      \t bt: $bt",
+                style: TextStyle(
+                  fontSize: 23,
+                ),
+              ),
+              leading: CircleAvatar(
                 radius: 40,
                 backgroundColor: Colors.blue.shade200,
                 child: Text(
@@ -256,50 +288,50 @@ class _AlgorithmState extends State<Algorithm> {
                   ),
                 ),
               ),
-            ),
-            trailing: Icon(
-              Icons.arrow_drop_down_circle_outlined,
-            ),
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "Start Process: $start",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            "End Process: $end",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "TAT: $tat",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            "WT: $wt",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              trailing: Icon(
+                Icons.arrow_drop_down_circle_outlined,
               ),
-            ],
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Start Process: $start",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              "End Process: $end",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "TAT: $tat",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              "WT: $wt",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

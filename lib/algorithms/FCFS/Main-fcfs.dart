@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'fcfs.dart';
 import 'table.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,6 +25,8 @@ class Algorithm extends StatefulWidget {
 
 class _AlgorithmState extends State<Algorithm> {
   List<Process> prs = [];
+  FocusNode nodebt = FocusNode();
+
   add(TextEditingController control1, TextEditingController control2) {
     setState(() {
       prs.sort((a, b) => a.pid.compareTo(b.pid));
@@ -39,7 +42,11 @@ class _AlgorithmState extends State<Algorithm> {
   delete() {
     setState(() {
       prs.sort((a, b) => a.pid.compareTo(b.pid));
-      prs.removeLast();
+      if (prs.length > 1) {
+        prs.removeLast();
+      } else {
+        prs.remove(prs.length - 1);
+      }
       assignPid(prs);
       fcfsalgo(prs);
       prs.sort((a, b) => a.at.compareTo(b.at));
@@ -81,10 +88,16 @@ class _AlgorithmState extends State<Algorithm> {
                                   ),
                                 ),
                                 TextField(
+                                  autofocus: true,
+                                  cursorWidth: 3,
+                                  cursorColor: Colors.amber,
                                   textAlign: TextAlign.center,
                                   showCursor: true,
                                   controller: control1,
                                   keyboardType: TextInputType.number,
+                                  onSubmitted: (control1) {
+                                    FocusScope.of(context).requestFocus(nodebt);
+                                  },
                                 ),
                               ],
                             ),
@@ -106,6 +119,9 @@ class _AlgorithmState extends State<Algorithm> {
                                 ),
                                 TextField(
                                   textAlign: TextAlign.center,
+                                  focusNode: nodebt,
+                                  cursorWidth: 3,
+                                  cursorColor: Colors.amber,
                                   showCursor: true,
                                   controller: control2,
                                   keyboardType: TextInputType.number,
@@ -164,12 +180,13 @@ class _AlgorithmState extends State<Algorithm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FCFS Try'),
-        backgroundColor: Colors.red,
+        title: Text('FCFS Try 2'),
+        backgroundColor: Colors.amber,
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.only(right: 20),
             child: FlatButton(
+              color: Colors.amber,
               onPressed: //null,
                   () {
                 prs.sort((a, b) => a.pid.compareTo(b.pid));
@@ -188,23 +205,17 @@ class _AlgorithmState extends State<Algorithm> {
           ),
           Padding(
             padding: EdgeInsets.only(right: 50),
-            child: GestureDetector(
-              onTap: () {
-                createaddDialog(context, prs);
-              },
-              child: Icon(
-                Icons.add,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 50),
-            child: GestureDetector(
-              onTap: () {
-                delete();
-              },
-              child: Icon(
-                Icons.delete,
+            child: Container(
+              color: Colors.amber,
+              width: 60,
+              child: FlatButton(
+                onPressed: () {
+                  createaddDialog(context, prs);
+                },
+                child: Icon(
+                  Icons.add_box,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -225,84 +236,267 @@ class _AlgorithmState extends State<Algorithm> {
   }
 
   Widget buildProcesscard(BuildContext context, int index) {
+    TextEditingController econtrol1 = new TextEditingController();
+    TextEditingController econtrol2 = new TextEditingController();
+
+    econtrol1 = TextEditingController(text: prs[index].at.toString());
+    econtrol2 = TextEditingController(text: prs[index].bt.toString());
+
     var at = prs[index].at.toString();
     var bt = prs[index].bt.toString();
     var tat = prs[index].tat.toString();
     var start = prs[index].start_time.toString();
     var end = prs[index].ct.toString();
     var wt = prs[index].wt.toString();
-    return Container(
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ExpansionTile(
-            title: Text(
-              "at: $at\t      \t bt: $bt",
-              style: TextStyle(
-                fontSize: 23,
+
+    void deleteprs(int index) {
+      setState(() {
+        prs.removeAt(index);
+      });
+    }
+
+    void editprs(int index, TextEditingController econtrol1,
+        TextEditingController econtrol2) {
+      setState(() {
+        prs[index].at = int.parse(econtrol1.text);
+        prs[index].bt = int.parse(econtrol2.text);
+      });
+    }
+
+    editDialog(BuildContext context, List<Process> prs, int index) {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ), //this right here
+              child: Container(
+                height: 280.0,
+                width: 200.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    'at:',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  TextField(
+                                    autofocus: true,
+                                    cursorWidth: 3,
+                                    cursorColor: Colors.amber,
+                                    textAlign: TextAlign.center,
+                                    showCursor: true,
+                                    controller: econtrol1,
+                                    keyboardType: TextInputType.number,
+                                    onSubmitted: (text) {
+                                      FocusScope.of(context)
+                                          .requestFocus(nodebt);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    'bt:',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  TextField(
+                                    textAlign: TextAlign.center,
+                                    focusNode: nodebt,
+                                    cursorWidth: 3,
+                                    cursorColor: Colors.amber,
+                                    showCursor: true,
+                                    controller: econtrol2,
+                                    keyboardType: TextInputType.number,
+                                    onSubmitted: (text) {
+                                      editprs(index, econtrol1, econtrol2);
+                                      Navigator.of(context)
+                                          .pop(); // Redraw the Stateful Widget
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 38),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RaisedButton(
+                                elevation: 8.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Text("Cancel"),
+                                onPressed: () {
+                                  control1.clear();
+                                  control2.clear();
+                                  Navigator.of(context).pop();
+                                }),
+                            RaisedButton(
+                                elevation: 8.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Text("Submit"),
+                                onPressed: () {
+                                  editprs(index, econtrol1, econtrol2);
+                                  Navigator.of(context).pop();
+                                }),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            leading: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 30, 0),
-              child: CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.blue.shade200,
-                child: Text(
-                  prs[index].pid,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+            );
+          });
+    }
+
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      actionExtentRatio: 0.25,
+      child: Container(
+        child: Card(
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ExpansionTile(
+              title: Text(
+                "at: $at\t      \t bt: $bt",
+                style: TextStyle(
+                  fontSize: 23,
+                ),
+              ),
+              leading: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 30, 0),
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.blue.shade200,
+                  child: Text(
+                    prs[index].pid,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-            trailing: Icon(
-              Icons.arrow_drop_down_circle_outlined,
-            ),
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "Start Process: $start",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            "End Process: $end",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "TAT: $tat",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            "WT: $wt",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              trailing: Icon(
+                Icons.arrow_drop_down_circle_outlined,
               ),
-            ],
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Start Process: $start",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              "End Process: $end",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "TAT: $tat",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              "WT: $wt",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      secondaryActions: <Widget>[
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Card(
+            //radius: 30,
+            //margin: EdgeInsets.symmetric(vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: IconSlideAction(
+              //caption: 'Text1',
+              color: Colors.green,
+              icon: Icons.edit_outlined,
+              onTap: () {
+                editDialog(context, prs, index);
+              },
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Card(
+            //radius: 30,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            child: IconSlideAction(
+              //caption: 'Text2',
+              color: Colors.red.shade600,
+              icon: Icons.delete_rounded,
+              onTap: () {
+                deleteprs(index);
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

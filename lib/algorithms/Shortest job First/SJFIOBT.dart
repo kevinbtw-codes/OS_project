@@ -1,18 +1,17 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'priority.dart';
-import 'package:os_project/algorithms/Card.dart';
+import './SJF.dart';
+import 'package:os_project/algorithms//Card.dart';
 import 'package:os_project/algorithms/Viewiobt.dart';
 
 //FCFS page stateful class
-class PriorityIOBT extends StatefulWidget {
+class SJFIOBT extends StatefulWidget {
   @override
-  _PriorityIOBTState createState() => _PriorityIOBTState();
+  _SJFIOBTState createState() => _SJFIOBTState();
 }
 
-class _PriorityIOBTState extends State<PriorityIOBT> {
+class _SJFIOBTState extends State<SJFIOBT> {
   var _counter = 0;
   double _avg_tat = 0, _avg_wt = 0;
 
@@ -28,7 +27,7 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
   void _viz() {
     int fct = 0;
     for (int i = 0; i < _counter; ++i) {
-      fct = max(fct, _data[i][5]);
+      fct = max(fct, _data[i][4]);
     }
     List<int> _ddata;
     _ddata = new List<int>.filled(fct + 1, -1);
@@ -37,49 +36,57 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
     _IoIn = new List<int>.filled(_counter, -1);
     _IoOut = new List<int>.filled(_counter, -1);
 
+    //start
     int cal = 0, st = 0;
-    List<int> vis, artime;
+    List<int> vis, artime, tbt;
     vis = new List<int>.filled(_counter, 0);
     artime = new List<int>.filled(_counter, 0);
-    for (int i = 0; i < _counter; ++i) artime[i] = _data[i][1];
+    tbt = new List<int>.filled(_counter, 0);
+    for (int i = 0; i < _counter; ++i) {
+      artime[i] = _data[i][0];
+      tbt[i] = _data[i][1] + _data[i][3];
+    }
     while (cal != 2 * _counter) {
-      var mx = -1, loc = -1;
+      var mn = 100, loc = 0;
+      bool f = true;
       for (var i = 0; i < _counter; ++i) {
-        if (_data[i][0] > mx &&
-            _data[i][1] <= st &&
-            (vis[i] == 0 || vis[i] == 1)) {
-          mx = _data[i][0];
+        if (tbt[i] < mn && (vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
+          mn = tbt[i];
           loc = i;
+          f = false;
         }
       }
-      if (loc == -1) {
+      if (f) {
         st++;
         continue;
       }
       cal++;
       if (vis[loc] == 0) {
-        _data[loc][8] = max(_data[loc][1], st) - _data[loc][1];
-        _data[loc][5] = max(_data[loc][1], st) + _data[loc][2];
-        for (int i = max(_data[loc][1], st) + 1; i <= _data[loc][5]; ++i) {
+        _data[loc][7] = st - _data[loc][0];
+        _data[loc][4] = st + _data[loc][1];
+        for (int i = st + 1; i <= _data[loc][4]; ++i) {
           _ddata[i] = loc;
         }
-        st = _data[loc][5];
-        _data[loc][1] = _data[loc][5] + _data[loc][3];
-        _IoIn[loc] = _data[loc][5];
-        _IoOut[loc] = _data[loc][1] - 1;
+        st = _data[loc][4];
+        _data[loc][0] = _data[loc][4] + _data[loc][2];
+        _IoIn[loc] = _data[loc][4];
+        _IoOut[loc] = _data[loc][0] - 1;
+        tbt[loc] -= _data[loc][1];
       }
       if (vis[loc] == 1) {
-        _data[loc][5] = max(_data[loc][1], st) + _data[loc][4];
-        for (int i = max(_data[loc][1], st) + 1; i <= _data[loc][5]; ++i) {
+        _data[loc][4] = st + _data[loc][3];
+        for (int i = st + 1; i <= _data[loc][4]; ++i) {
           _ddata[i] = loc;
         }
-        st = _data[loc][5];
-        _data[loc][6] = _data[loc][5] - artime[loc];
-        _data[loc][7] = _data[loc][6] - _data[loc][2] - _data[loc][4];
+        st = _data[loc][4];
+        _data[loc][5] = _data[loc][4] - artime[loc];
+        _data[loc][6] = _data[loc][5] - _data[loc][1] - _data[loc][3];
       }
-      for (int i = 0; i < 9; ++i) _datas[loc][i] = _data[loc][i].toString();
+      for (int i = 0; i < 8; ++i) _datas[loc][i] = _data[loc][i].toString();
+      vis[loc]++;
     }
-    for (int i = 0; i < _counter; ++i) _data[i][1] = artime[i];
+    for (int i = 0; i < _counter; ++i) _data[i][0] = artime[i];
+    //end
 
     for (int i = 0; i < fct; ++i) {
       if (_ddata[i] == _ddata[i + 1]) {
@@ -164,12 +171,12 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
     for (int i = 0; i <= fct; ++i) {
       String tempNa = '', tempRe = '', tempTe = '', tempRu = '', tempIo = '';
       for (int j = 0; j < _counter; ++j) {
-        if (_data[j][1] > i) {
+        if (_data[j][0] > i) {
           if (tempNa.isEmpty)
             tempNa += 'P' + j.toString();
           else
             tempNa += ', P' + j.toString();
-        } else if (_data[j][5] <= i) {
+        } else if (_data[j][4] <= i) {
           if (tempTe.isEmpty)
             tempTe += 'P' + j.toString();
           else
@@ -195,7 +202,7 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
       _Io.add(tempIo);
     }
 
-    view.TakeData('Priority', _Na, _Re, _Ru, _Io, _Te, fct, _disdata, _disNum);
+    view.TakeData('SJF', _Na, _Re, _Ru, _Io, _Te, fct, _disdata, _disNum);
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => view()),
@@ -203,110 +210,114 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
   }
 
   void _Gant() {
-    //print('running');
     _cardv.clear();
     _cardvs.clear();
     _readyq.clear();
     int cal = 0, st = 0, _tt = 0;
-    List<int> vis, artime;
+    List<int> vis, artime, tbt;
     vis = new List<int>.filled(_counter, 0);
     artime = new List<int>.filled(_counter, 0);
-    for (int i = 0; i < _counter; ++i) artime[i] = _data[i][1];
+    tbt = new List<int>.filled(_counter, 0);
+    for (int i = 0; i < _counter; ++i) {
+      artime[i] = _data[i][0];
+      tbt[i] = _data[i][1] + _data[i][3];
+    }
     while (cal != 2 * _counter) {
-      var mx = -1, loc = -1;
-      for (var i = 0; i < _counter; ++i) {
-        if (_data[i][0] > mx &&
-            _data[i][1] <= st &&
-            (vis[i] == 0 || vis[i] == 1)) {
-          mx = _data[i][0];
-          loc = i;
-        }
-      }
-      if (loc == -1) {
-        st++;
-        continue;
-      }
       _readyq.add(List.filled(_counter, false));
+      var mn = 100, loc = 0;
+      bool f = true;
       for (var i = 0; i < _counter; ++i) {
-        if (_data[i][1] <= st && (vis[i] == 0 || vis[i] == 1)) {
+        if (tbt[i] < mn && (vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
+          mn = tbt[i];
+          loc = i;
+          f = false;
+        }
+        if ((vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
           _readyq[_tt][i] = true;
         }
       }
+      if (f) {
+        st++;
+        _readyq.removeLast();
+        continue;
+      }
       cal++;
-      _readyq[_tt][loc] = false;
-
       if (vis[loc] == 0) {
         _cardv.add([0, 0, 0, 0]);
         _cardvs.add(['0', '0', '0', '0']);
         _cardv[_tt][0] = loc;
-        _cardv[_tt][1] = max(_data[loc][1], st);
-        _data[loc][8] = max(_data[loc][1], st) - _data[loc][1];
-        _data[loc][5] = max(_data[loc][1], st) + _data[loc][2];
-        st = _data[loc][5];
+        _cardv[_tt][1] = st;
+        _data[loc][7] = st - _data[loc][0];
+        _data[loc][4] = st + _data[loc][1];
+        st = _data[loc][4];
         _cardv[_tt][2] = st;
         _cardv[_tt][3] = 2;
-        _data[loc][1] = _data[loc][5] + _data[loc][3];
-      }
-      if (vis[loc] == 1) {
+        _data[loc][0] = _data[loc][4] + _data[loc][2];
+        tbt[loc] -= _data[loc][1];
+      } else if (vis[loc] == 1) {
         _cardv.add([0, 0, 0, 0]);
         _cardvs.add(['0', '0', '0', '0']);
         _cardv[_tt][0] = loc;
-        _cardv[_tt][1] = max(_data[loc][1], st);
-
-        _data[loc][5] = max(_data[loc][1], st) + _data[loc][4];
-        st = _data[loc][5];
+        _cardv[_tt][1] = st;
+        _data[loc][4] = st + _data[loc][3];
+        st = _data[loc][4];
         _cardv[_tt][2] = st;
         _cardv[_tt][3] = 1;
-        _data[loc][6] = _data[loc][5] - artime[loc];
-        _data[loc][7] = _data[loc][6] - _data[loc][2] - _data[loc][4];
+        _data[loc][5] = _data[loc][4] - artime[loc];
+        _data[loc][6] = _data[loc][5] - _data[loc][1] - _data[loc][3];
       }
-      for (int i = 0; i < 9; ++i) _datas[loc][i] = _data[loc][i].toString();
+      for (int i = 0; i < 8; ++i) _datas[loc][i] = _data[loc][i].toString();
       for (int i = 0; i < 4; ++i) _cardvs[_tt][i] = _cardv[_tt][i].toString();
       vis[loc]++;
       _tt++;
     }
-    for (int i = 0; i < _counter; ++i) _data[i][1] = artime[i];
+    for (int i = 0; i < _counter; ++i) _data[i][0] = artime[i];
   }
 
   void _calculate() {
     int cal = 0, st = 0;
-    List<int> vis, artime;
+    List<int> vis, artime, tbt;
     vis = new List<int>.filled(_counter, 0);
     artime = new List<int>.filled(_counter, 0);
-    for (int i = 0; i < _counter; ++i) artime[i] = _data[i][1];
+    tbt = new List<int>.filled(_counter, 0);
+    for (int i = 0; i < _counter; ++i) {
+      artime[i] = _data[i][0];
+      tbt[i] = _data[i][1] + _data[i][3];
+    }
     while (cal != 2 * _counter) {
-      var mx = -1, loc = -1;
+      var mn = 100, loc = 0;
+      bool f = true;
       for (var i = 0; i < _counter; ++i) {
-        if (_data[i][0] > mx &&
-            _data[i][1] <= st &&
-            (vis[i] == 0 || vis[i] == 1)) {
-          mx = _data[i][0];
+        if (tbt[i] < mn && (vis[i] == 0 || vis[i] == 1) && st >= _data[i][0]) {
+          mn = tbt[i];
           loc = i;
+          f = false;
         }
       }
-      if (loc == -1) {
+      if (f) {
         st++;
         continue;
       }
       cal++;
       if (vis[loc] == 0) {
-        _data[loc][8] = max(_data[loc][1], st) - _data[loc][1];
-        _data[loc][5] = max(_data[loc][1], st) + _data[loc][2];
-        st = _data[loc][5];
-        _data[loc][1] = _data[loc][5] + _data[loc][3];
+        _data[loc][7] = st - _data[loc][0];
+        _data[loc][4] = st + _data[loc][1];
+        st = _data[loc][4];
+        _data[loc][0] = _data[loc][4] + _data[loc][2];
+        tbt[loc] -= _data[loc][1];
       }
       if (vis[loc] == 1) {
-        _data[loc][5] = max(_data[loc][1], st) + _data[loc][4];
-        st = _data[loc][5];
-        _data[loc][6] = _data[loc][5] - artime[loc];
-        _data[loc][7] = _data[loc][6] - _data[loc][2] - _data[loc][4];
+        _data[loc][4] = st + _data[loc][3];
+        st = _data[loc][4];
+        _data[loc][5] = _data[loc][4] - artime[loc];
+        _data[loc][6] = _data[loc][5] - _data[loc][1] - _data[loc][3];
       }
-      for (int i = 0; i < 9; ++i) _datas[loc][i] = _data[loc][i].toString();
+      for (int i = 0; i < 8; ++i) _datas[loc][i] = _data[loc][i].toString();
       int _sum = 0;
-      for (int i = 0; i < _counter; ++i) _sum += _data[i][6];
+      for (int i = 0; i < _counter; ++i) _sum += _data[i][5];
       _avg_tat = _sum / _counter;
       _sum = 0;
-      for (int i = 0; i < _counter; ++i) _sum += _data[i][7];
+      for (int i = 0; i < _counter; ++i) _sum += _data[i][6];
       _avg_wt = _sum / _counter;
       int t = loc;
       _rowList[loc] = DataRow(cells: <DataCell>[
@@ -314,9 +325,9 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
             Text('P' + t.toString(), style: TextStyle(color: Colors.white))),
         DataCell(TextField(
           //expands: true,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(2),
-          ],
+          // inputFormatters: [
+          //   LengthLimitingTextInputFormatter(2),
+          // ],
           maxLines: 1,
           textAlign: TextAlign.center,
           keyboardType: TextInputType.number,
@@ -371,37 +382,22 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
             });
           },
         )),
-        DataCell(TextField(
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.white),
-          onChanged: (val) {
-            setState(() {
-              _datas[t][4] = val;
-              _data[t][4] = int.parse(val);
-              _calculate();
-            });
-          },
-        )),
+        DataCell(Text(_datas[t][4], style: TextStyle(color: Colors.white))),
         DataCell(Text(_datas[t][5], style: TextStyle(color: Colors.white))),
         DataCell(Text(_datas[t][6], style: TextStyle(color: Colors.white))),
         DataCell(Text(_datas[t][7], style: TextStyle(color: Colors.white))),
-        DataCell(Text(_datas[t][8], style: TextStyle(color: Colors.white))),
       ]);
       vis[loc]++;
     }
-    for (int i = 0; i < _counter; ++i) _data[i][1] = artime[i];
+    for (int i = 0; i < _counter; ++i) _data[i][0] = artime[i];
   }
 
   void _addrow() {
     setState(() {
       var t = _counter;
       _counter++;
-      _data.add([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      _datas.add(['0', '0', '0', '0', '0', '0', '0', '0', '0']);
-      //_cardv.add([0, 0, 0, 0]);
-      //_cardvs.add(['0', '0', '0', '0']);
+      _data.add([0, 0, 0, 0, 0, 0, 0, 0]);
+      _datas.add(['0', '0', '0', '0', '0', '0', '0', '0']);
       _rowList.add(DataRow(cells: <DataCell>[
         DataCell(Text('P' + (_counter - 1).toString(),
             style: TextStyle(color: Colors.white))),
@@ -457,23 +453,10 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
             });
           },
         )),
-        DataCell(TextField(
-          maxLines: 1,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.white),
-          onChanged: (val) {
-            _datas[t][4] = val;
-            _data[t][4] = int.parse(val);
-            setState(() {
-              _calculate();
-            });
-          },
-        )),
+        DataCell(Text(_datas[t][4], style: TextStyle(color: Colors.white))),
         DataCell(Text(_datas[t][5], style: TextStyle(color: Colors.white))),
         DataCell(Text(_datas[t][6], style: TextStyle(color: Colors.white))),
         DataCell(Text(_datas[t][7], style: TextStyle(color: Colors.white))),
-        DataCell(Text(_datas[t][8], style: TextStyle(color: Colors.white))),
       ]));
     });
   }
@@ -499,7 +482,7 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           title: Text(
-            'Priority',
+            'SJF',
             style: TextStyle(fontFamily: 'Pacifico'),
           ),
           backgroundColor: Colors.red,
@@ -526,7 +509,7 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
                         Navigator.pop(context);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Priority()),
+                          MaterialPageRoute(builder: (context) => SJF()),
                         );
                       }),
                   alignment: Alignment.topRight,
@@ -542,10 +525,6 @@ class _PriorityIOBTState extends State<PriorityIOBT> {
                       columns: [
                         DataColumn(
                             label: Text('P',
-                                style: TextStyle(color: Colors.white)),
-                            numeric: false),
-                        DataColumn(
-                            label: Text('Priority',
                                 style: TextStyle(color: Colors.white)),
                             numeric: false),
                         DataColumn(

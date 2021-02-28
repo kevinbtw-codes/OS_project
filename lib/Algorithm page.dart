@@ -489,7 +489,12 @@ class _WaveDemoHomePageState extends State<WaveDemoHomePage> {
                                   color: Colors.purple[400],
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    // Perform some action
+                                    Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                        builder: (context) => new SJF(),
+                                      ),
+                                    );
                                   },
                                   child: const Text(
                                     'LEARN',
@@ -507,7 +512,12 @@ class _WaveDemoHomePageState extends State<WaveDemoHomePage> {
                                   color: Colors.purple[400],
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    // Perform some action
+                                    Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                        builder: (context) => new SJF(),
+                                      ),
+                                    );
                                   },
                                   child: const Text(
                                     'START',

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:os_project/algorithms/FCFS/Main-fcfs.dart';
 import 'package:os_project/algorithms/Priority/Priority.dart';
+import 'package:os_project/algorithms/Shortest job First/SJF.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -11,7 +12,7 @@ class WaveDemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Wave Demo',
+      title: 'CPU Scheduling',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

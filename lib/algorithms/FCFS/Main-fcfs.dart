@@ -389,75 +389,86 @@ class _AlgorithmState extends State<Algorithm> {
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.25,
       child: Container(
-        child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ExpansionTile(
-              title: Text(
-                "at: $at\t      \t bt: $bt",
+        margin: EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 3,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ExpansionTile(
+            title: Text(
+              "at: $at\t      \t bt: $bt",
+              style: TextStyle(
+                fontSize: 23,
+              ),
+            ),
+            leading: CircleAvatar(
+              radius: 40,
+              backgroundColor: Colors.blue.shade200,
+              child: Text(
+                prs[index].pid,
                 style: TextStyle(
-                  fontSize: 23,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              leading: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 30, 0),
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.blue.shade200,
-                  child: Text(
-                    prs[index].pid,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            ),
+            trailing: Icon(
+              Icons.arrow_drop_down_circle_outlined,
+            ),
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            "Start Process: $start",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            "End Process: $end",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-              trailing: Icon(
-                Icons.arrow_drop_down_circle_outlined,
-              ),
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "Start Process: $start",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "End Process: $end",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            "TAT: $tat",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            "WT: $wt",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "TAT: $tat",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "WT: $wt",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

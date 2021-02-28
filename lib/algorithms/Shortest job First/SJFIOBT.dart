@@ -2,7 +2,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './SJF.dart';
+<<<<<<< HEAD
+import 'package:os_project/algorithms/Card.dart';
+=======
 import 'package:os_project/algorithms//Card.dart';
+>>>>>>> 20c96a7758fd8b82d745733dfe145ff3c105e087
 import 'package:os_project/algorithms/Viewiobt.dart';
 
 //FCFS page stateful class

@@ -260,6 +260,7 @@ class _AlgorithmState extends State<Algorithm> {
       setState(() {
         prs[index].at = int.parse(econtrol1.text);
         prs[index].bt = int.parse(econtrol2.text);
+        prs.sort((a, b) => a.at.compareTo(b.at));
       });
     }
 
@@ -475,6 +476,7 @@ class _AlgorithmState extends State<Algorithm> {
               icon: Icons.edit_outlined,
               onTap: () {
                 editDialog(context, prs, index);
+                setState(() {});
               },
             ),
           ),

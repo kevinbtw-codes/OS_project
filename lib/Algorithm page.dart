@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:os_project/algorithms/FCFS/Main-fcfs.dart';
 import 'package:os_project/algorithms/Priority/Priority.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -228,6 +229,12 @@ class _WaveDemoHomePageState extends State<WaveDemoHomePage> {
                                   color: Color(0xFFE3796C),
                                   textColor: Colors.white,
                                   onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                        builder: (context) => new MyApp(),
+                                      ),
+                                    );
                                     //code
                                   },
                                   child: const Text(

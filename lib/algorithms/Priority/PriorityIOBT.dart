@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'Priority.dart';
+import 'priority.dart';
 import 'package:os_project/algorithms/Card.dart';
 import 'package:os_project/algorithms/Viewiobt.dart';
 

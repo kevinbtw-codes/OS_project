@@ -37,92 +37,88 @@ class Process {
   }
 }
 
-void main(List<String> arguments) {
-  List<Process> prs = List<Process>();
-  int choose;
-  var number = true;
-  while (number) {
-    print('1. Add process');
-    print('2. Remove process');
-    print('3. Print fcfs table');
-    print('4. Exit');
-    print('Enter option: ');
-    choose = int.parse(stdin.readLineSync());
-    switch (choose) {
-      case 1:
-        addprocess(prs);
-        fcfsalgo(prs);
-        break;
-      case 2:
-        removeprocess(prs);
-        fcfsalgo(prs);
-        break;
-      case 3:
-        break;
-      case 4:
-        number = false;
-        break;
-      default:
-        print('enter a valid number');
-        break;
-    }
-  }
-}
+List<Process> sjfalgo(List<Process> l) {
+  List<Process> lgantt = [];
+  lgantt = List.from(l); //lgantt is the local copy of the processes list
+  List<Process> rq = List<Process>();
+  List<Process> fq = [];
 
-void addprocess(List l) {
-  print('Pid\tat\tbt');
-  for (int i = 0; i < l.length; i++) {
-    l[i].printatbt();
-  }
-  print('');
-  stdout.write('at => ');
-  // ignore: omit_local_variable_types
-  int at = int.parse(stdin.readLineSync());
-  stdout.write('bt => ');
-  // ignore: omit_local_variable_types
-  int bt = int.parse(stdin.readLineSync());
-  l.add(Process(at, bt));
-  assignPid(l);
-}
-
-void removeprocess(List l) {
-  print('Pid\tat\tbt');
-  for (int i = 0; i < l.length; i++) {
-    l[i].printatbt();
-  }
-  print('');
-  stdout.write('Enter the Pid you want to remove - ');
-  // ignore: omit_local_variable_types
-  int id = int.parse(stdin.readLineSync());
-  if (id < l.length) {
-    l.removeAt(id);
-    assignPid(l);
-  } else {
-    print('enter a valid Pid');
-  }
-}
-
-void fcfsalgo(List<Process> lgantt) {
-  //var lgantt = List.of(l);
   lgantt.sort((a, b) => a.at.compareTo(b.at));
+
   int i = 0;
   int time = lgantt[0].at;
-  for (i = 0; i < lgantt.length; i++) {
-    if (time >= lgantt[i].at) {
-      lgantt[i].start_time = time;
-      lgantt[i].ct = lgantt[i].bt + lgantt[i].start_time;
-      time = lgantt[i].ct;
-      lgantt[i].tat = lgantt[i].ct - lgantt[i].at;
-      lgantt[i].wt = lgantt[i].start_time - lgantt[i].at;
+
+  for (i = 0; i < l.length; i++) {
+    if (rq.isEmpty) {
+      time = lgantt[0].at;
+      time = processexec(lgantt, time, 0);
+      fillfq(lgantt, fq, 0);
+      fillrq(rq, time, lgantt);
     } else {
-      lgantt[i].start_time = lgantt[i].at;
-      lgantt[i].ct = lgantt[i].bt + lgantt[i].start_time;
-      time = lgantt[i].ct;
-      lgantt[i].tat = lgantt[i].ct - lgantt[i].at;
-      lgantt[i].wt = lgantt[i].start_time - lgantt[i].at;
+      sjfsort(rq);
+      time = processexec(rq, time, 0);
+      fillfq(rq, fq, 0);
+      if (lgantt.isNotEmpty) {
+        fillrq(rq, time, lgantt);
+      }
     }
   }
-  lgantt.sort((a, b) => a.pid.compareTo(b.pid));
+  //fq.sort((a, b) => a.pid.compareTo(b.pid));
+  return fq;
+  //lgantt.sort((a, b) => a.pid.compareTo(b.pid));
+}
+
+void sjfsort(List<Process> l) {
+  l.sort((a, b) => a.bt.compareTo(b.bt));
+  for (var i = 0; i < l.length - 1; i++) {
+    if (l[i].bt == l[i + 1].bt) {
+      if (l[i].at > l[i + 1].at) {
+        Process temp;
+        temp = l[i + 1];
+        l[i + 1] = l[i];
+        l[i] = temp;
+      }
+    }
+  }
+}
+
+//will fill the ready queue(rq) and sort it according to their burst time
+void fillrq(List<Process> rq, int time, List<Process> l) {
+  int i = 0;
+  int count = 0;
+  l.sort((a, b) => a.at.compareTo(b.at));
+  while (l.isNotEmpty && count < l.length) {
+    i = 0;
+    if (l[i].at <= time) {
+      rq.add(l[i]);
+      l.removeAt(i);
+      count--;
+    } else {
+      i++;
+    }
+    count++;
+  }
+
+  if (rq.isNotEmpty) {
+    sjfsort(rq);
+  }
+}
+
+//will delete the process from the parent list and add
+//it to the finished list fq
+void fillfq(List<Process> l, List<Process> fq, int i) {
+  fq.add(l[i]);
+  l.removeAt(i);
+}
+
+int processexec(List<Process> lgantt, int stime, int i) {
+  int time;
+  lgantt[i].start_time = stime;
+  lgantt[i].ct = lgantt[i].bt + lgantt[i].start_time;
+  time = lgantt[i].ct;
+  lgantt[i].tat = lgantt[i].ct - lgantt[i].at;
+  lgantt[i].wt = lgantt[i].tat - lgantt[i].bt;
+  return time;
 }
 
 void assignPid(List l) {

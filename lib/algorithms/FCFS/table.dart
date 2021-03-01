@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazy_data_table/lazy_data_table.dart';
-import 'fcfs.dart';
+import 'package:os_project/algorithms/FCFS/fcfs.dart';
 
 class TheTable extends StatefulWidget {
   List<Process> prs;

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:os_project/algorithms/FCFS/Main-fcfs.dart';
 import 'package:os_project/algorithms/Priority/priority.dart';
-import 'package:os_project/algorithms/Shortest job First/SJF.dart';
+import 'package:os_project/algorithms/Shortest job First/Main-SJF.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -492,7 +492,7 @@ class _WaveDemoHomePageState extends State<WaveDemoHomePage> {
                                     Navigator.push(
                                       context,
                                       new MaterialPageRoute(
-                                        builder: (context) => new SJF(),
+                                        builder: (context) => new MySJFApp(),
                                       ),
                                     );
                                   },
@@ -515,7 +515,7 @@ class _WaveDemoHomePageState extends State<WaveDemoHomePage> {
                                     Navigator.push(
                                       context,
                                       new MaterialPageRoute(
-                                        builder: (context) => new SJF(),
+                                        builder: (context) => new MySJFApp(),
                                       ),
                                     );
                                   },

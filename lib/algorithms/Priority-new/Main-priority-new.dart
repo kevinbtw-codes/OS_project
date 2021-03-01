@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'fcfs.dart';
-import 'table.dart';
+import 'priority-new.dart';
+import 'table-new.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyPriorityApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyPriorityApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

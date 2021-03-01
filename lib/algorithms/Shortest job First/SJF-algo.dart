@@ -63,9 +63,7 @@ List<Process> sjfalgo(List<Process> l) {
       }
     }
   }
-  //fq.sort((a, b) => a.pid.compareTo(b.pid));
   return fq;
-  //lgantt.sort((a, b) => a.pid.compareTo(b.pid));
 }
 
 void sjfsort(List<Process> l) {

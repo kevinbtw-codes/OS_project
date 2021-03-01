@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:os_project/animation1.dart';
@@ -35,7 +34,7 @@ class FirstScreen extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/homepage.gif"),
+            image: AssetImage("images/1.gif"),
             fit: BoxFit.cover,
           ),
         ),
@@ -50,7 +49,7 @@ class FirstScreen extends StatelessWidget {
                   width: 320,
                   alignment: Alignment.center,
                   child: Text(
-                    " ",
+                    "OS Virtual Lab",
                     style: TextStyle(fontSize: 32.0, color: Colors.deepOrange),
                   ),
                 ),
@@ -61,8 +60,11 @@ class FirstScreen extends StatelessWidget {
                       print("Tap Event");
                     },
                     text: [
-                      " ",
-
+                      "Kevin D'souza",
+                      "Aryan Shah",
+                      "Charmi Shah",
+                      "Khushi Shah",
+                      "Devansh Shah",
                     ],
                     textStyle: TextStyle(
                       fontSize: 28.0,
@@ -73,7 +75,6 @@ class FirstScreen extends StatelessWidget {
                 ),
                 RaisedButton(
                   color: Color(0xFF22456D),
-                  padding: EdgeInsets.fromLTRB(0,0,0, 0),
                   child: Text(
                     'LAUNCH',
                     style: TextStyle(

@@ -34,22 +34,7 @@ class _AlgorithmState extends State<Algorithm> {
       control1.clear();
       control2.clear();
       assignPid(prs);
-      sjfalgo(prs);
-      prs.sort((a, b) => a.at.compareTo(b.at));
-    });
-  }
-
-  delete() {
-    setState(() {
-      prs.sort((a, b) => a.pid.compareTo(b.pid));
-      if (prs.length > 1) {
-        prs.removeLast();
-      } else {
-        prs.remove(prs.length - 1);
-      }
-      assignPid(prs);
-      sjfalgo(prs);
-      prs.sort((a, b) => a.at.compareTo(b.at));
+      prs = sjfalgo(prs);
     });
   }
 
@@ -180,7 +165,7 @@ class _AlgorithmState extends State<Algorithm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FCFS Try 2'),
+        title: Text('SJF'),
         backgroundColor: Colors.amber,
         actions: <Widget>[
           Padding(
@@ -254,6 +239,7 @@ class _AlgorithmState extends State<Algorithm> {
     void deleteprs(int index) {
       setState(() {
         prs.removeAt(index);
+        prs = sjfalgo(prs);
       });
     }
 
@@ -262,7 +248,7 @@ class _AlgorithmState extends State<Algorithm> {
       setState(() {
         prs[index].at = int.parse(econtrol1.text);
         prs[index].bt = int.parse(econtrol2.text);
-        prs.sort((a, b) => a.at.compareTo(b.at));
+        prs = sjfalgo(prs);
       });
     }
 

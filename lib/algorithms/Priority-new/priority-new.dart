@@ -40,7 +40,7 @@ class Process {
   }
 }
 
-void priorityalgo(List<Process> l) {
+List<Process> priorityalgo(List<Process> l) {
   List<Process> lgantt = [];
   lgantt = List.from(l); //lgantt is the local copy of the processes list
   List<Process> rq = List<Process>();
@@ -68,6 +68,7 @@ void priorityalgo(List<Process> l) {
   }
   //fq.sort((a, b) => a.pid.compareTo(b.pid));
   //lgantt.sort((a, b) => a.pid.compareTo(b.pid));
+  return fq;
 }
 
 void priorsort(List<Process> l) {

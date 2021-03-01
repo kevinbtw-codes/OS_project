@@ -12,7 +12,7 @@ class Process {
   int tat;
   int wt;
 
-  Process(this.at, this.bt);
+  Process(this.at, this.bt, this.priority);
 
   @override
   String toString() {
@@ -27,10 +27,12 @@ class Process {
       case 2:
         return this.bt;
       case 3:
-        return this.ct;
+        return this.priority;
       case 4:
-        return this.tat;
+        return this.ct;
       case 5:
+        return this.tat;
+      case 6:
         return this.wt;
       default:
         return 0;
@@ -38,7 +40,7 @@ class Process {
   }
 }
 
-List<Process> priorityalgo(List<Process> l) {
+void priorityalgo(List<Process> l) {
   List<Process> lgantt = [];
   lgantt = List.from(l); //lgantt is the local copy of the processes list
   List<Process> rq = List<Process>();
@@ -65,7 +67,6 @@ List<Process> priorityalgo(List<Process> l) {
     }
   }
   //fq.sort((a, b) => a.pid.compareTo(b.pid));
-  return fq;
   //lgantt.sort((a, b) => a.pid.compareTo(b.pid));
 }
 

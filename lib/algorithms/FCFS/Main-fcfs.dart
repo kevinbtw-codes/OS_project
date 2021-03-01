@@ -200,11 +200,12 @@ class _AlgorithmState extends State<Algorithm> {
               child: Icon(
                 Icons.table_view_rounded,
                 color: Colors.white,
+                size: 38,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 50),
+            padding: EdgeInsets.only(right: 70),
             child: Container(
               color: Colors.amber,
               width: 60,
@@ -215,6 +216,7 @@ class _AlgorithmState extends State<Algorithm> {
                 child: Icon(
                   Icons.add_box,
                   color: Colors.white,
+                  size: 38,
                 ),
               ),
             ),
@@ -260,6 +262,7 @@ class _AlgorithmState extends State<Algorithm> {
       setState(() {
         prs[index].at = int.parse(econtrol1.text);
         prs[index].bt = int.parse(econtrol2.text);
+        prs.sort((a, b) => a.at.compareTo(b.at));
       });
     }
 
@@ -486,6 +489,7 @@ class _AlgorithmState extends State<Algorithm> {
               icon: Icons.edit_outlined,
               onTap: () {
                 editDialog(context, prs, index);
+                setState(() {});
               },
             ),
           ),

@@ -51,11 +51,11 @@ void main(List<String> arguments) {
     switch (choose) {
       case 1:
         addprocess(prs);
-        fcfsalgo(prs);
+        sjfalgo(prs);
         break;
       case 2:
         removeprocess(prs);
-        fcfsalgo(prs);
+        sjfalgo(prs);
         break;
       case 3:
         break;
@@ -102,9 +102,9 @@ void removeprocess(List l) {
   }
 }
 
-void fcfsalgo(List<Process> lgantt) {
+void sjfalgo(List<Process> lgantt) {
   //var lgantt = List.of(l);
-  lgantt.sort((a, b) => a.at.compareTo(b.at));
+  sortsjf(lgantt);
   int i = 0;
   int time = lgantt[0].at;
   for (i = 0; i < lgantt.length; i++) {
@@ -123,6 +123,20 @@ void fcfsalgo(List<Process> lgantt) {
     }
   }
   lgantt.sort((a, b) => a.pid.compareTo(b.pid));
+}
+
+void sortsjf(List<Process> l) {
+  l.sort((a, b) => a.bt.compareTo(b.bt));
+  for (var i = 0; i < l.length - 1; i++) {
+    if (l[i].bt == l[i + 1].bt) {
+      if (l[i].at > l[i + 1].at) {
+        Process temp;
+        temp = l[i + 1];
+        l[i + 1] = l[i];
+        l[i] = temp;
+      }
+    }
+  }
 }
 
 void assignPid(List l) {

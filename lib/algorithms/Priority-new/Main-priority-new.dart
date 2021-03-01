@@ -206,7 +206,7 @@ class _AlgorithmState extends State<Algorithm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Non Preemptive Priority'),
+        title: Text('Priority'),
         backgroundColor: Colors.amber,
         actions: <Widget>[
           Padding(

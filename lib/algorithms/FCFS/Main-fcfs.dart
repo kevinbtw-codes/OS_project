@@ -180,13 +180,13 @@ class _AlgorithmState extends State<Algorithm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FCFS Try 2'),
-        backgroundColor: Colors.amber,
+        title: Text('FCFS'),
+        backgroundColor: Color(0xff22456d),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: FlatButton(
-              color: Colors.amber,
+              color : Color(0xff22456d),
               onPressed: //null,
                   () {
                 prs.sort((a, b) => a.pid.compareTo(b.pid));
@@ -207,7 +207,7 @@ class _AlgorithmState extends State<Algorithm> {
           Padding(
             padding: EdgeInsets.only(right: 70),
             child: Container(
-              color: Colors.amber,
+              color : Color(0xff22456d),
               width: 60,
               child: FlatButton(
                 onPressed: () {

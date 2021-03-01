@@ -34,7 +34,7 @@ class FirstScreen extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/1.gif"),
+            image: AssetImage("images/homepage.gif"),
             fit: BoxFit.cover,
           ),
         ),
@@ -49,7 +49,7 @@ class FirstScreen extends StatelessWidget {
                   width: 320,
                   alignment: Alignment.center,
                   child: Text(
-                    "OS Virtual Lab",
+                    " ",
                     style: TextStyle(fontSize: 32.0, color: Colors.deepOrange),
                   ),
                 ),
@@ -60,11 +60,8 @@ class FirstScreen extends StatelessWidget {
                       print("Tap Event");
                     },
                     text: [
-                      "Kevin D'souza",
-                      "Aryan Shah",
-                      "Charmi Shah",
-                      "Khushi Shah",
-                      "Devansh Shah",
+                      " ",
+
                     ],
                     textStyle: TextStyle(
                       fontSize: 28.0,

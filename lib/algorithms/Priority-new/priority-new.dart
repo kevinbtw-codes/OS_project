@@ -66,8 +66,6 @@ List<Process> priorityalgo(List<Process> l) {
       }
     }
   }
-  //fq.sort((a, b) => a.pid.compareTo(b.pid));
-  //lgantt.sort((a, b) => a.pid.compareTo(b.pid));
   return fq;
 }
 

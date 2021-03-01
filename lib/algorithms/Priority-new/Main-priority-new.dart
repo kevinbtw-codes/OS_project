@@ -278,6 +278,7 @@ class _AlgorithmState extends State<Algorithm> {
     var start = prs[index].start_time.toString();
     var end = prs[index].ct.toString();
     var wt = prs[index].wt.toString();
+    var priority = prs[index].priority.toString();
 
     void deleteprs(int index) {
       setState(() {
@@ -487,7 +488,7 @@ class _AlgorithmState extends State<Algorithm> {
           padding: const EdgeInsets.all(10.0),
           child: ExpansionTile(
             title: Text(
-              "at: $at\t      \t bt: $bt",
+              "AT: $at \t BT: $bt \t P: $priority",
               style: TextStyle(
                 fontSize: 23,
               ),

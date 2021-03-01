@@ -13,7 +13,7 @@ class TheTable extends StatefulWidget {
 class _TheTableState extends State<TheTable> {
   List<Process> prs;
   _TheTableState(this.prs);
-  final List colum_head = ['pid', 'at', 'bt', 'ct', 'tat', 'wt'];
+  final List colum_head = ['pid', 'at', 'bt', 'priority', 'ct', 'tat', 'wt'];
   final int j = 0;
   int thing(i, j) {
     return prs[i].tablevalue(j);

@@ -52,7 +52,7 @@ class _TheTableState extends State<TheTable> {
                   tableDimensions: LazyDataTableDimensions(
                     columnHeaderHeight: 50,
                     cellHeight: 50,
-                    cellWidth: 68.5,
+                    cellWidth: 72.5,
                   ),
                   columnHeaderBuilder: (i) =>
                       Center(child: Text(colum_head[i].toUpperCase())),

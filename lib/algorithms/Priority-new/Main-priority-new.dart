@@ -39,7 +39,6 @@ class _AlgorithmState extends State<Algorithm> {
       control3.clear();
       assignPid(prs);
       prs = priorityalgo(prs);
-      //priorsort(prs);
     });
   }
 
@@ -294,7 +293,6 @@ class _AlgorithmState extends State<Algorithm> {
         prs[index].bt = int.parse(econtrol2.text);
         prs[index].priority = int.parse(econtrol3.text);
         prs = priorityalgo(prs);
-        //priorsort(prs);
       });
     }
 

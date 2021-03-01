@@ -34,7 +34,7 @@ class _AlgorithmState extends State<Algorithm> {
       control1.clear();
       control2.clear();
       assignPid(prs);
-      fcfsalgo(prs);
+      priorityalgo(prs);
       prs.sort((a, b) => a.at.compareTo(b.at));
     });
   }
@@ -48,7 +48,7 @@ class _AlgorithmState extends State<Algorithm> {
         prs.remove(prs.length - 1);
       }
       assignPid(prs);
-      fcfsalgo(prs);
+      priorityalgo(prs);
       prs.sort((a, b) => a.at.compareTo(b.at));
     });
   }

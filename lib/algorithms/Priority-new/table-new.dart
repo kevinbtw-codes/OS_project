@@ -13,7 +13,7 @@ class TheTable extends StatefulWidget {
 class _TheTableState extends State<TheTable> {
   List<Process> prs;
   _TheTableState(this.prs);
-  final List colum_head = ['pid', 'at', 'bt','priority','ct', 'tat', 'wt'];
+  final List colum_head = ['pid', 'at', 'bt', 'priority', 'ct', 'tat', 'wt'];
   final int j = 0;
   int thing(i, j) {
     return prs[i].tablevalue(j);
@@ -52,7 +52,7 @@ class _TheTableState extends State<TheTable> {
                   tableDimensions: LazyDataTableDimensions(
                     columnHeaderHeight: 50,
                     cellHeight: 50,
-                    cellWidth: 68.5,
+                    cellWidth: 72.5,
                   ),
                   columnHeaderBuilder: (i) =>
                       Center(child: Text(colum_head[i].toUpperCase())),

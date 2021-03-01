@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:os_project/Learn%20pages/Learn.dart';
 import 'package:os_project/algorithms/Priority-new/Main-priority-new.dart';
 import 'package:os_project/algorithms/Shortest job First/Main-SJF.dart';
 import 'package:os_project/algorithms/FCFS/Main-fcfs.dart';
@@ -213,13 +212,7 @@ class _WaveDemoHomePageState extends State<WaveDemoHomePage> {
                                   color: Color(0xFFE3796C),
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                        builder: (context) => new LearnPage(),
-                                      ),
-                                    );
-                                    //code
+                                    // Perform some action
                                   },
                                   child: const Text(
                                     'LEARN',

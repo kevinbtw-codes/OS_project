@@ -39,7 +39,6 @@ class _AlgorithmState extends State<Algorithm> {
       control3.clear();
       assignPid(prs);
       priorityalgo(prs);
-      priorsort(prs);
     });
   }
 

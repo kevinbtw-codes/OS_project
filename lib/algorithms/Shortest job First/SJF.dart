@@ -414,8 +414,8 @@ class _SJFState extends State<SJF> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Builder(
-                      builder: (context)=> (RaisedButton
-                        ( color: Colors.black,
+                      builder: (context) => (RaisedButton(
+                        color: Colors.black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                           side: BorderSide(color: Colors.red),
@@ -424,16 +424,13 @@ class _SJFState extends State<SJF> {
                           'Delete Process',
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: (){
+                        onPressed: () {
                           _RemoveRow();
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Row Deleted'),
-                              )
-                          );
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('Row Deleted'),
+                          ));
                         },
-                      )
-                      ),
+                      )),
                     ),
                   ),
                 ],

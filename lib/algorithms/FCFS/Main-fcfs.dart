@@ -200,11 +200,12 @@ class _AlgorithmState extends State<Algorithm> {
               child: Icon(
                 Icons.table_view_rounded,
                 color: Colors.white,
+                size: 38,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 50),
+            padding: EdgeInsets.only(right: 70),
             child: Container(
               color: Colors.amber,
               width: 60,
@@ -215,6 +216,7 @@ class _AlgorithmState extends State<Algorithm> {
                 child: Icon(
                   Icons.add_box,
                   color: Colors.white,
+                  size: 38,
                 ),
               ),
             ),

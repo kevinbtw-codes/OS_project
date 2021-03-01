@@ -47,7 +47,7 @@ class _TheTableState extends State<TheTable> {
             children: [
               Expanded(
                 child: LazyDataTable(
-                  columns: 6,
+                  columns: 7,
                   rows: prs.length,
                   tableDimensions: LazyDataTableDimensions(
                     columnHeaderHeight: 50,

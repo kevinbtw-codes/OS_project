@@ -282,6 +282,7 @@ class _AlgorithmState extends State<Algorithm> {
     void deleteprs(int index) {
       setState(() {
         prs.removeAt(index);
+        prs = priorityalgo(prs);
       });
     }
 
@@ -291,7 +292,7 @@ class _AlgorithmState extends State<Algorithm> {
         prs[index].at = int.parse(econtrol1.text);
         prs[index].bt = int.parse(econtrol2.text);
         prs[index].priority = int.parse(econtrol3.text);
-        prs = priorsort(prs);
+        prs = priorityalgo(prs);
       });
     }
 
